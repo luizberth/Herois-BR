@@ -42,7 +42,7 @@ int NumChute;
 
 int main()
 {
-    int Escolher = 1, OpcaoArma, Opcao;
+    int Escolher = 0, OpcaoArma, Opcao;
     int totalCP = 0, totalP=0, soma;
     int totalPE = 0,TotalAK = 0, totalCH = 0;
     int totalBolso = 0, totalNey = 0, totalTite = 0, totalCou = 0;
@@ -103,7 +103,7 @@ int main()
                      system("cls");
                      sentinela = 0;
                     }
-                    Escolher_Personagem(Escolher);
+                    EscolherPersonagem(Escolher);
                     system("pause");
                     system("cls");
                 }while(sentinela == 0);
@@ -222,7 +222,7 @@ int main()
 
             //DADOS DO PERSONAGEM
             printf("Dados do seu personagem:\n");
-            printf("Personagem: %s.\n", VetTipoPersonagem[statsPlayer[0]]);
+            printf("Personagem: %s.\n", VetTipoPersonagem[statsPlayer[0] - 1]);
             printf("HP: %i.\n",statsPlayer[2]);
             printf("Arma: %s.\n", VetTipoArma[statsPlayer[1]]);
             printf("HP Extra: %i.\n", statsPlayer[4]);
@@ -253,7 +253,7 @@ int main()
                 printf("estão no brasil.\n");
                 printf("Desta batalha incessante sobraram apenas quatro dos maiores herois \n");
                 printf("brasileiros, são eles: Bolsonaro, Neymar, Coutinho e Tite, você escolheu\n");
-                printf("%s e o computador escolheu %s para batalhar, represente bem eles e boa\n", VetTipoPersonagem[statsPlayer[0]], VetTipoPersonagem[statsCPU[0]]);
+                printf("%s e o computador escolheu %s para batalhar, represente bem eles e boa\n", VetTipoPersonagem[statsPlayer[0]- 1], VetTipoPersonagem[statsCPU[0]]);
                 printf("sorte na batalha!!!!\n");
                 system("pause");
                 system("cls");
@@ -279,14 +279,14 @@ int main()
                 int criticoPlayer= statsPlayer[3];
                 int criticoCPU= statsCPU[3];
                 printf("BATALHA INICIADA!!!\n");
-                printf("BATALHA ENTRE %s E %s.\n",VetTipoPersonagem[statsPlayer[0]], VetTipoPersonagem[statsCPU[0]]);
+                printf("BATALHA ENTRE %s E %s.\n",VetTipoPersonagem[statsPlayer[0] - 1], VetTipoPersonagem[statsCPU[0]]);
                 system("pause");
                 system("cls");
 
                 while(healthcpu > 0 || healthplayer > 0){
                     if (healthplayer <=0 || healthcpu <= 0)
                         {
-                            printf("HP %s: %i\n",VetTipoPersonagem[statsPlayer[0]], healthplayer);
+                            printf("HP %s: %i\n",VetTipoPersonagem[statsPlayer[0] - 1], healthplayer);
                             printf("HP %s: %i\n",VetTipoPersonagem[statsCPU[0]] ,healthcpu);
                             system("pause");
                             system("cls");
@@ -295,31 +295,31 @@ int main()
                     else
                     {
                         sentinela = rand() % 10 + 1;
-                        if(sentinela == 0)
+                        if(sentinela == 1)
                         {
-                            printf("O %s ACERTOU UM ATAQUE CRITICO.\n",VetTipoPersonagem[statsPlayer[0]]);
+                            printf("O %s ACERTOU UM ATAQUE CRITICO.\n",VetTipoPersonagem[statsPlayer[0] - 1]);
                             healthcpu = healthcpu - (criticoPlayer + rand() % (10) + 1);
-                            printf("HP %s: %i\n",VetTipoPersonagem[statsPlayer[0]], healthplayer);
+                            printf("HP %s: %i\n",VetTipoPersonagem[statsPlayer[0] - 1], healthplayer);
                             printf("HP %s: %i\n",VetTipoPersonagem[statsCPU[0]] ,healthcpu);
                             system("pause");
                             system("cls");
                         }
-                        else if (sentinela == 1)
+                        else if (sentinela == 2)
                         {
                             printf("O %s ACERTOU UM ATAQUE CRITICO!!!\n",VetTipoPersonagem[statsCPU[0]]);
                             healthplayer = healthplayer - (criticoCPU + rand() % (10) + 1);
                             contadorCP= contadorCP + 1;
-                            printf("HP %s: %i\n",VetTipoPersonagem[statsPlayer[0]], healthplayer);
+                            printf("HP %s: %i\n",VetTipoPersonagem[statsPlayer[0] - 1], healthplayer);
                             printf("HP %s: %i\n",VetTipoPersonagem[statsCPU[0]] ,healthcpu);
                             system("pause");
                             system("cls");
                         }
-                        else if(sentinela >= 2 && sentinela <=5)
+                        else if(sentinela >= 3 && sentinela <=6)
                         {
-                            printf("O %s ACERTOU UM ATAQUE.\n",VetTipoPersonagem[statsPlayer[0]]);
+                            printf("O %s ACERTOU UM ATAQUE.\n",VetTipoPersonagem[statsPlayer[0] - 1]);
                             healthcpu = healthcpu - rand() % (10) + 1;
                             contadorP= contadorP + 1;
-                            printf("HP %s: %i\n",VetTipoPersonagem[statsPlayer[0]], healthplayer);
+                            printf("HP %s: %i\n",VetTipoPersonagem[statsPlayer[0] - 1], healthplayer);
                             printf("HP %s: %i\n",VetTipoPersonagem[statsCPU[0]] ,healthcpu);
                             system("pause");
                             system("cls");
@@ -329,7 +329,7 @@ int main()
                             printf("O %s ACERTOU UM ATAQUE.\n",VetTipoPersonagem[statsCPU[0]]);
                             healthplayer = healthplayer - rand() % (10) + 1;
                             contadorCP= contadorCP + 1;
-                            printf("HP %s: %i\n",VetTipoPersonagem[statsPlayer[0]], healthplayer);
+                            printf("HP %s: %i\n",VetTipoPersonagem[statsPlayer[0] - 1], healthplayer);
                             printf("HP %s: %i\n",VetTipoPersonagem[statsCPU[0]] ,healthcpu);
                             system("pause");
                             system("cls");
@@ -346,13 +346,13 @@ int main()
             }
             else if(Opcao == 4)
             {
-                printf("HP DO %s ANTES DA BATALHA: %i\n",VetTipoPersonagem[statsPlayer[0]], statsPlayer[2] + statsPlayer[4]);
+                printf("HP DO %s ANTES DA BATALHA: %i\n",VetTipoPersonagem[statsPlayer[0] - 1], statsPlayer[2] + statsPlayer[4]);
                 printf("HP DO %s ANTES DA BATALHA: %i\n",VetTipoPersonagem[statsCPU[0]], statsCPU[2] + statsCPU[4] );
-                printf("HP FINAL DO %s: %i\n", VetTipoPersonagem[statsPlayer[0]], healthplayer);
+                printf("HP FINAL DO %s: %i\n", VetTipoPersonagem[statsPlayer[0] - 1], healthplayer);
                 printf("HP FINAL DO %s: %i\n", VetTipoPersonagem[statsCPU[0]], healthcpu);
-                printf("CRITICO %s: %i\n", VetTipoPersonagem[statsPlayer[0]], statsPlayer[3]);
+                printf("CRITICO %s: %i\n", VetTipoPersonagem[statsPlayer[0] - 1], statsPlayer[3]);
                 printf("CRITICO %s: %i\n", VetTipoPersonagem[statsCPU[0]], statsCPU[3]);
-                printf("QUANTIDADE DE GOLPES %s: %i\n",VetTipoPersonagem[statsPlayer[0]], contadorP);
+                printf("QUANTIDADE DE GOLPES %s: %i\n",VetTipoPersonagem[statsPlayer[0] - 1], contadorP);
                 printf("QUANTIDADE DE GOLPES %s: %i\n",VetTipoPersonagem[statsCPU[0]], contadorCP);
                 printf("SOMA DOS GOLPES: %i.\n", soma);
                 system("pause");
@@ -387,7 +387,7 @@ int main()
     }
     return 0;
 }
-void Escolher_Personagem(int Escolher)
+void EscolherPersonagem(int Escolher)
 {
     if(Escolher == 1)
     {
