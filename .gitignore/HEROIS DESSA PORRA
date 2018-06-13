@@ -3,7 +3,7 @@
 #include <time.h>
 #include <locale.h>
 #define HEALTHMINIMO 50
-#define HEALTHMAXIMO 200
+#define HEALTHMAXIMO 100
 #define HEALTHEXTRAMAXIMO 50
 #define HEALTHEXTRAMINIMO 0
 #define CRITICOMAXIMO 50
@@ -43,11 +43,17 @@ int NumChute;
 int main()
 {
     int Escolher = 1, OpcaoArma, Opcao;
+    int totalCP = 0, totalP=0, soma;
+    int totalPE = 0,TotalAK = 0, totalCH = 0;
+    int contadorPE;
+    int contadorAK;
+    int contadorCH;
     setlocale(LC_ALL, "Portuguese");
     srand(time(NULL));
     printf("\n\n");
     printf("OS HEROIS BRASILEIROS.\n");
     printf("\n\n");
+
     system("pause");
     system("cls");
     while (FimJogo==0){
@@ -60,35 +66,26 @@ int main()
                     printf("4 - %s. \n\n", VetTipoPersonagem[3]);
                     printf("Resposta:");
                     scanf("%i", &Escolher);
-                    Escolher--;
                     statsPlayer[0] = Escolher;
                     system("cls");
-                    if(Escolher == 0)
+                    if(Escolher == 1)
                     {
                         printf("Meu personagem: %s\n\n", VetTipoPersonagem[0]);
-                        system("pause");
-                        system("cls");
-                        sentinela = 1;
-                    }
-                    else if (Escolher == 1)
-                    {
-                        printf("Meu personagem: %s\n\n", VetTipoPersonagem[1]);
-                        system("pause");
-                        system("cls");
                         sentinela = 1;
                     }
                     else if (Escolher == 2)
                     {
-                        printf("Meu personagem: %s\n\n", VetTipoPersonagem[2]);
-                        system("pause");
-                        system("cls");
+                        printf("Meu personagem: %s\n\n", VetTipoPersonagem[1]);
                         sentinela = 1;
                     }
                     else if (Escolher == 3)
                     {
+                        printf("Meu personagem: %s\n\n", VetTipoPersonagem[2]);
+                        sentinela = 1;
+                    }
+                    else if (Escolher == 4)
+                    {
                         printf("Meu personagem: %s\n\n", VetTipoPersonagem[3]);
-                        system("pause");
-                        system("cls");
                         sentinela = 1;
                     }
                     else
@@ -98,9 +95,15 @@ int main()
                      system("cls");
                      sentinela = 0;
                     }
+                    Escolher_Personagem(Escolher);
+                    system("pause");
+                    system("cls");
                 }while(sentinela == 0);
 
                 do{
+                    contadorAK = 0;
+                    contadorCH = 0;
+                    contadorPE = 0;
                     printf("Escolha sua arma:\n\n");
                     printf("1 - %s.\n\n", VetTipoArma[0]);
                     printf("2 - %s.\n\n", VetTipoArma[1]);
@@ -117,6 +120,7 @@ int main()
                         system("cls");
                         sentinela = 1;
                         FimSelecao = 1;
+                        contadorPE = contadorPE + 1;
                     }
                     else if(OpcaoArma == 1)
                     {
@@ -125,6 +129,7 @@ int main()
                         system("cls");
                         sentinela = 1;
                         FimSelecao = 1;
+                        contadorAK = contadorAK + 1;
                     }
                     else if(OpcaoArma == 2)
                     {
@@ -133,6 +138,7 @@ int main()
                         system("cls");
                         sentinela = 1;
                         FimSelecao = 1;
+                        contadorCH = contadorCH + 1;
                     }
                     else
                     {
@@ -147,9 +153,14 @@ int main()
 
         }while(FimSelecao == 0);
 
-
             statsPlayer[2] = rand() % (HEALTHMAXIMO - HEALTHMINIMO + 1) + HEALTHMINIMO;
             statsPlayer[3] = rand() % (CRITICOMAXIMO + 1);
+
+            statsCPU[0] = rand() % (QNTDPERSO + 1);
+            statsCPU[1] = rand() % (QNTDARMA + 1);
+            statsCPU[2] = rand() % (HEALTHMAXIMO - HEALTHMINIMO + 1) + HEALTHMINIMO;
+            statsCPU[3] = rand() % (CRITICOMAXIMO + 1);
+            statsCPU[4] = rand() % (HEALTHEXTRAMAXIMO + 1);
 
             int numero;
             NumChute = rand() % (20 + 1);
@@ -215,6 +226,8 @@ int main()
 
 
         do{
+                int healthplayer;
+                int healthcpu, contadorP, contadorCP;
 
             printf("MENU\n");
             printf("1) Imprime o contexto do jogo.\n");
@@ -228,20 +241,310 @@ int main()
             system("cls");
             if (Opcao == 1)
             {
-                printf("historia do jogo\n");
+                printf("Em um universo alternativo, os heróis mais poderosos da terra, tendem a\n");
+                printf("fazer um batalha para ver quem receberá o prêmio de mais forte de todos\n");
+                printf("os tempos, e por incrível que pareça os heroes mais poderosos da terra \n");
+                printf("estão no brasil.\n");
+                printf("Desta batalha incessante sobraram apenas quatro dos maiores herois \n");
+                printf("brasileiros, são eles: Bolsonaro, Neymar, Coutinho e Tite, você escolheu\n");
+                printf("%s e o computador escolheu %s para batalhar, represente bem eles e boa\n", VetTipoPersonagem[statsPlayer[0]], VetTipoPersonagem[statsCPU[0]]);
+                printf("sorte na batalha!!!!\n");
                 system("pause");
                 system("cls");
             }
             else if(Opcao == 2)
             {
-                statsCPU[0] = rand() % (QNTDPERSO + 1);
-                statsCPU[1] = rand() % (QNTDARMA + 1);
-                statsCPU[2] = rand() % (HEALTHMAXIMO - HEALTHMINIMO + 1) + HEALTHMINIMO;
-                statsCPU[3] = rand() % (CRITICOMAXIMO + 1);
-                statsCPU[4] = rand() % (HEALTHEXTRAMAXIMO + 1);
-            }
 
+                printf("Dados do CPU:\n");
+                printf("NOME: %s.\n", VetTipoPersonagem[statsCPU[0]]);
+                printf("HP: %i.\n",statsCPU[2]);
+                printf("Arma: %s.\n", VetTipoArma[statsCPU[1]]);
+                printf("HP Extra: %i.\n", statsCPU[4]);
+                system("pause");
+                system("cls");
+            }
+            else if(Opcao == 3)
+            {
+                healthplayer = statsPlayer[2] + statsPlayer[4];
+                healthcpu = statsCPU[2] + statsCPU[4];
+                contadorP = 0;
+                contadorCP = 0;
+                soma = 0;
+                int criticoPlayer= statsPlayer[3];
+                int criticoCPU= statsCPU[3];
+                printf("BATALHA INICIADA!!!\n");
+                printf("BATALHA ENTRE %s E %s.\n",VetTipoPersonagem[statsPlayer[0]], VetTipoPersonagem[statsCPU[0]]);
+                system("pause");
+                system("cls");
+
+                while(healthcpu > 0 || healthplayer > 0){
+                    if (healthplayer <=0 || healthcpu <= 0)
+                        {
+                            printf("HP %s: %i\n",VetTipoPersonagem[statsPlayer[0]], healthplayer);
+                            printf("HP %s: %i\n",VetTipoPersonagem[statsCPU[0]] ,healthcpu);
+                            system("pause");
+                            system("cls");
+                            break;
+                        }
+                    else
+                    {
+                        sentinela = rand() % 10 + 1;
+                        if(sentinela == 0)
+                        {
+                            printf("O %s ACERTOU UM ATAQUE CRITICO.\n",VetTipoPersonagem[statsPlayer[0]]);
+                            healthcpu = healthcpu - (criticoPlayer + rand() % (10) + 1);
+                            printf("HP %s: %i\n",VetTipoPersonagem[statsPlayer[0]], healthplayer);
+                            printf("HP %s: %i\n",VetTipoPersonagem[statsCPU[0]] ,healthcpu);
+                            system("pause");
+                            system("cls");
+                        }
+                        else if (sentinela == 1)
+                        {
+                            printf("O %s ACERTOU UM ATAQUE CRITICO!!!\n",VetTipoPersonagem[statsCPU[0]]);
+                            healthplayer = healthplayer - (criticoCPU + rand() % (10) + 1);
+                            contadorCP= contadorCP + 1;
+                            printf("HP %s: %i\n",VetTipoPersonagem[statsPlayer[0]], healthplayer);
+                            printf("HP %s: %i\n",VetTipoPersonagem[statsCPU[0]] ,healthcpu);
+                            system("pause");
+                            system("cls");
+                        }
+                        else if(sentinela >= 2 && sentinela <=5)
+                        {
+                            printf("O %s ACERTOU UM ATAQUE.\n",VetTipoPersonagem[statsPlayer[0]]);
+                            healthcpu = healthcpu - rand() % (10) + 1;
+                            contadorP= contadorP + 1;
+                            printf("HP %s: %i\n",VetTipoPersonagem[statsPlayer[0]], healthplayer);
+                            printf("HP %s: %i\n",VetTipoPersonagem[statsCPU[0]] ,healthcpu);
+                            system("pause");
+                            system("cls");
+                        }
+                        else
+                        {
+                            printf("O %s ACERTOU UM ATAQUE.\n",VetTipoPersonagem[statsCPU[0]]);
+                            healthplayer = healthplayer - rand() % (10) + 1;
+                            contadorCP= contadorCP + 1;
+                            printf("HP %s: %i\n",VetTipoPersonagem[statsPlayer[0]], healthplayer);
+                            printf("HP %s: %i\n",VetTipoPersonagem[statsCPU[0]] ,healthcpu);
+                            system("pause");
+                            system("cls");
+                        }
+                        soma= contadorCP + contadorP;
+                    }
+
+                }
+
+
+
+
+
+            }
+            else if(Opcao == 4)
+            {
+                printf("HP DO %s ANTES DA BATALHA: %i\n",VetTipoPersonagem[statsPlayer[0]], statsPlayer[2] + statsPlayer[4]);
+                printf("HP DO %s ANTES DA BATALHA: %i\n",VetTipoPersonagem[statsCPU[0]], statsCPU[2] + statsCPU[4] );
+                printf("HP FINAL DO %s: %i\n", VetTipoPersonagem[statsPlayer[0]], healthplayer);
+                printf("HP FINAL DO %s: %i\n", VetTipoPersonagem[statsCPU[0]], healthcpu);
+                printf("CRITICO %s: %i\n", VetTipoPersonagem[statsPlayer[0]], statsPlayer[3]);
+                printf("CRITICO %s: %i\n", VetTipoPersonagem[statsCPU[0]], statsCPU[3]);
+                printf("QUANTIDADE DE GOLPES %s: %i\n",VetTipoPersonagem[statsPlayer[0]], contadorP);
+                printf("QUANTIDADE DE GOLPES %s: %i\n",VetTipoPersonagem[statsCPU[0]], contadorCP);
+                printf("SOMA DOS GOLPES: %i.\n", soma);
+                system("pause");
+                system("cls");
+            }
+            else if (Opcao == 5)
+            {
+                totalCP = totalCP + contadorCP;
+                totalP = totalP + contadorP;
+                totalCH = totalCH + contadorCH;
+                TotalAK = TotalAK + contadorAK;
+                totalPE = totalPE + contadorPE;
+
+                printf("TOTAL DE GOLPES DADO PELO PLAYER: %i.\n", totalP);
+                printf("TOTAL DE GOLPES DADO PELO CPU: %i.\n", totalCP);
+                printf("TOTAL DE VEZES QUE A PEDALADA FOI ESCOLHIDA: %i VEZES.\n", totalPE);
+                printf("TOTAL DE VEZES QUE A AK47 FOI ESCOLHIDA: %i VEZES.\n", TotalAK);
+                printf("TOTAL DE VEZES QUE O CHUTE FOI ESCOLHIDO: %i VEZES.\n", totalCH);
+                system("pause");
+                system("cls");
+            }
         }while(Opcao != 5);
     }
     return 0;
+}
+void Escolher_Personagem(int Escolher)
+{
+    if(Escolher == 1)
+    {
+printf("B888BMBMMOMOM888BBMGMB@BBM@B@MOPNN80qjLi:,::i:::iiriii;iiirrrrrii::,:,,L@@@B@BOB@07.\n");
+printf("OG8MB@MBMMMM8O8OM@88MBB@BBBBNX0OOBB8GZk57;,::::i::,::;7Lj2U1YJj5UFUvi:,:v@B@@BqqEBB@\n");
+printf("OO@B@BMMMMMMMOM8MMGGMM@B@B@22ZZ0BMU7J2k0OO0uvrrr7J5UUu25PF1uuuUFZO8OPL:.iv@@@ONP008G\n");
+printf("OBB@MMOMMBMMOMOOOMEGMBB@B@02XSL2q7:i:iir75NMO8qP5kS0k1ujLJJuuS2uu5SNEMu:,vu@BNP0P0N8\n");
+printf("BB@MOOMOBMBMM8M8MOMZMB@@@q2FSjU87::,,.....::rvLLYvL7vjvr7v21N5FFFJUJ15q5i:uFOPNqqXEE\n");
+printf("B@MO8MOBBBMM8MOMMMMO8MB@BZLU2YE1,:.... .         ....:rvi::rrj21kENkkEXESr7J1ZqqPqP0\n");
+printf("@MMOMM@BBMMGOOBOMOMOOOBBBu7MSSMi,::,,....           ..:ruuL7v7v7F0MBZZMGMEuLL0G00qNq\n");
+printf("BMOMBBB@MOGMOMMMOO8O8MB@O;L@2ZXi,::,..                  ,7LLYjJLvFM@BBB@M@MPrSZ0PqqE\n");
+printf("B8MB@B@MM88OMMBMMGO8OO@BMYLq5PS::,,                      .::r7LU2LXM@OGOMM@BuUGqqP0N\n");
+printf("OMM@BBBMMOEOM@MBOGE8GMM@8M7152F: ..      . .   ..::irr:.  .,,:rUX71MMOXOMOB@ujEqP0NZ\n");
+printf("BB@MMM@M8EOOBB@B@MOGOGMM@B@0ULFi:...... :::irJSN0Nkjvii::.... .72ivq@OqM@BBB1L0Z8G8G\n");
+printf("B@BBM@MO0GOBB@B@B@M8OMMMM@@@17uFFuUPXku7:..JqGGZMOZMqSP5L;..   ,i.,:Liv@BMZM80OBMOOO\n");
+printf("@MMM@BMEZGMB@B@BMOGOBBBOBB@B@7LFq8MB@B@B.  ikZZF177ULrLv7:... ..r.v;:iUF: 7M@0qZMOOG\n");
+printf("MOM@BBZEZMB@B@BBOGEMB@MMM@BO .U5NB55PqBO   .,iivY1u7;r:..   .,.,:ruFYJ1L: .@BE2XEMMM\n");
+printf("MM@B@80EMB@B@BO0qkGB@BMM@@r   2L1FuYuJU:        ..:::       .,::::ii: ,.: .MBBEXq0MM\n");
+printf("B@B@ZXEBB@B@OESkPOB@BBB@1     :jiLJY7i,:   ...             .,::::i,.      :8M@M01XNO\n");
+printf("@BMXkE@B@BMNPX0EMB@@@BB:       ri,..  ,.   ,: .,r:        ..:,::::::::    jNBPZMO15k\n");
+printf("B@OE8@B@B8q0ZOM@BGO@BL         ;7: ..r,    .   .,LY:   ...,:.::::::::. ..ru5F5uEM@Ok\n");
+printf("MBMM@B@BBMBB@B@EjvUF    .      :uii;uvrii:rLvuv   iJJi:,,.,,,,:,,.,:JviLPJ1ULXuJkO@B\n");
+printf("PGM@B@B@@@B@B@v:2B@i     . . . .7  iFr;8GOXX7i.    ,r5Li::.,,:,,,,,:EBJO@M1ZurXkUuLX\n");
+printf("qZ@B@B@B@B@B2,:P@P.            .    .v:rFXur,.....,:v7r..::.,,,:,:ii7i:1@MSXOSBZ2YJ7\n");
+printf("0BB@B@B@M@B.  .Fi                    J1jLjJuju5kFOB@U    .i:,:,::iii. .uZuuUFESuYuYL\n");
+printf("OM@BBMMOOM@B:                   .    v@B@0J77:7vL1L,     :i::::irrri  :222UjU25YLLLv\n");
+printf("GMOBMMMMM@Bv                   ;.. ..irJBk::.           .Lii:irLrri:..LXuUjujJvLvYLY\n");
+printf("MMOBB@B@Bv   .                ML:i;7j1.,7Jvvrii:,. ,,...:ii7JFu2Lvi ,E2uj2JLLYvL7v7v\n");
+printf("MBB@MMM@B@B@BBUr:::,..   .  :ukSU5vUM@B@B@8q2FXZOMLLJv7i   FX,  r@k1U2UuYJLjLJvv7vvu\n");
+printf("@B@B@MBB@B@B@B@BXvri::,..    .J8MY,B@B@B@B@@BNEGMM,:Yj12;. ..  i@PF12u2juuFP8B@MSE@B\n");
+printf("B@B@B@B@B@B@@@B@B@GYi:.:..    .;L, UO@B@B@B@B@GM@@::FSLi.     i@0k11jUuUUkkPFSJJuFY7\n");
+printf("@qu;, iB@@@B@BOjii, ..::,;r::::..     uB@@@B@B@OPr  ::.       XMESUjU2uYuLjLL7i;u5ZO\n");
+printf("       vY7i::.      .,:    ,:iri...     .@B@5:         . ..:,..v5q152SuJLuYLv5M@BBEk\n");
+printf(",::  :Lj7,    .  ..:::i:      :L1Li.     P@         ..:::::.. . .LXkk0ONP5F8@@@XYvLv\n");
+printf("Mi 7B@Bv   ....  .,:,,:Lu1jvr:,,;XMMF7i:.GBY     ,i7vL;,      .,   .;7:L5GB@MNjjuuJu\n");
+printf("  @BML. ..,,:,    .::,. ,i7v5XUi:.iuOO0FuB@@YrY1O0Xv:     ..,,::..  r1... r5uvju1JjJ\n");
+printf("8BU:   ,..:rvr:,::ir:.,     .,i;r::,iXEM@B@BXvr5:   .,:iii:   ....   ::i7  ruLLLjLY7\n");
+    }
+    else if(Escolher == 2)
+    {
+printf("ZMBM@BBMMMBMBMBMBMMOMO8q0qqPGZOOBMBMMOM8MMMMBMBOMGOOMOMOOGGGGOMMBMMOMOMOO8OGO8MOMMBMMMBB@B@BBMBMBMBB\n");
+printf("E8M@BBOM8MOMMMMM8OEZNESXXPSqNZZOOOGGZ80NqOO8NGOMOBMMOMMM8OZEPG8OOMOM8O8OEGEGZ88MOMMBMMMBMBMBMMOMMMMM\n");
+printf("8O@MMZ8ZOOMMMOMZG0EP0qNXqqq0OZ8ZG0ZNZ0EM@@@B@B@B@B@MMOMOMMMEEZOOMOMOM8M8OZOGOOMOMMBB@BBMMMMOMMMOMMBM\n");
+printf("EZGGqEN8GO8MOO88EEPXkqPN0Z0ZZZq0q00Z0OB@BZuYYSS1PNMO00NOOBMOZ8ZO8O8OOMOOZGE8GOGOOMMBMBMMMMMMMMOMOMM@\n");
+printf("qkNXXqZZG0Z0GGOG8EE00NZGOGO8OEEE0PE8OB@M57ri::i:: jEXXN0MMBOOZ8ZOGOZ8OMO8ZZEGZ8Z8OMMBMBMMMBMMOMOMMMB\n");
+printf("FFXqPG8OZEPN0OOMOMZZEGZ8EZEOOOGOE88MO@@MUrrqYJv7ri,SSkkZ8BMMO8G8Z80GZ88OGG0ZZ8EGEOOMMMMBMBMBMMOMOMM@\n");
+printf("kSEOMOMOGNEPZ8MMM8GNEPNP0NEEMMMOOOMMMM@k7L7jviriiUq5PkNEOMMMMZZEGEEEGZ888ZGEGZOZOGOOMMBMBMBMMOOOMMBB\n");
+printf("EOM@B@BMO8OMMMMBOGEZ00XqXNP08MMMOMMBBkS5iYZ177v;:Uk0EqPZGO8OOGE8GG0ZZ8Z8ZG0ZZGZ8ZO8MMBMBMBMBMMOMMBMB\n");
+printf("BM@B@B@MBMBB@MBMM0E0GG8N0NZGMMMMBB@B@:ruFuS777YvL: .ENNqZE88OZ8Z8ZO8O8OEG00NZEGE8Z88MMBMMMBMMMBMBMBM\n");
+printf("B@B@@@@@M@MBBBMMO80EEMMMMMOBB@B@B@B@YrU1JqP5uuuJ7r2Pk0P0qZZOOOGGZOMMMMOOGG00NENZEGZ88MMMMBMBB@M@MMMM\n");
+printf("MMBBBMBM@MBMBMMMM88ZOMBB@B@BGj7;i         .iBBNuj2GMZkXXE0OOMOM8OOMMBMBOOZZq0P00EEZZOOMMMM@BBMM8OOMM\n");
+printf("G8OMOOOM88q0XNNZGO0EEMB@PY:          ..      ;v5uN@@EXSXqGGMMMOO8OOMOMOOGG0EN0PEEGZGGOOMMBM@MGqNqZ8M\n");
+printf("80800kP52UFuuu11XXNqGBN.    . ...:... ...        .LkOONXqNGOM8OZGEGZGEGEG00XqX00GZ8ZOOMOMOMMMqNPP0OM\n");
+printf("EEPPF1uUJuuuvu255PNG@J   . .7rr: 7.v:r.;.,:.         UB0k0G8GOGOEZNENGZZqEPqkPPEEZZOOO8MOMMBOEqNPOMM\n");
+printf("MEqk5vLYujUuuu15kNG@Z  .....:::...,:i::i:r:  .... .   EBGGMOMOMMOZGZGE8EGEENZ0ENEE8GO8MMMOMMMGOOMMBB\n");
+printf("BMNSLv7LY2SqXXFPSPZB. .:....    ...,.... , ..i;7..,.   @@@B@B@BME0XPP0EMMMOM8G0ZNGEO8OOMOMMBMMMMM@B@\n");
+printf("@@82v77vJUE00PPSk5M:  :i,.:.,r7Ju,. ...i:.  :ir,,...,. 1@7irirBMZPk5X08OMMBMM88NNqGZOOOOMOMMBM@B@B@B\n");
+printf("O8k2YvrvJSqZEEXkF8j  .,7:,.,iLLXr ...rYE8Ou:.,. .:.::, iZ..:..kB0NSFSZEOOMMMO8N0X0NG0GZOOMMBM@B@B@BB\n");
+printf("X11uUJYJFNZZMM80MP  ..,i:.,., iU:  :ZML.:uOq::ii,.::,...@ErivrkB80EPE8MMBMMOOZEXNPE0EEGEOOMMBB@B@B@B\n");
+printf("2JuU1Xq00GE8OMO@B. ....ii..,..2u. :5J, .  j8J.:7UZY:.,. k@q2:.L@MMOMMBMMOGNNX0qNP0NENEqZEOOMM@B@B@B@\n");
+printf("quYjSPOO8Z8ZMM@@@  ..,iG5....,Xj  0Bu ... iPU.:.,ji ..,.YB@,   B@O8Z8G8EqSS5kkqqEqENZqE0GZO8MM@B@BBB\n");
+printf("0XU25XqEPPkq0MB@.  ...U@0....;ZL ,kS,.::,,P@Bi7v:kuJq0O7 @M    @BMZZ0EE055juu1SENEqEEE0G0GE8OMB@@@MB\n");
+printf("qFX5F5S1UJ1SqZ@: ...,rGZ@:.,.LZi iZF...,. vS; ,irG@EPPMr v, . vB@OGXS2S1FuY7vL2SE0Eq00GZZE8ZOMBB@BBM\n");
+printf("PkkPkk51uujSPBL  ..:i21SML :.5E: rES.,::.:M@r:ii0FB@P0GBv:    k@MONX252F2Jv77vLFNO000Z0ZEGE88MM@B@MB\n");
+printf("0kqXEqPkXkPNMB  ..,i2LLuO7 .,0@i :MOi ...2Mq:::.rivBM88qS:    @@BGES5U5k5YvrrrL5OMMGGZENGZOOMMBB@B@B\n");
+printf("ENP008GGNGZMBq 7rr:7Uv7jEu ..MB7..rG0i..LBO:.::iLu7Eui:.   . v@OMM0P1150X1v77LuNM@MG0EP00ZZ88MMBB@B@\n");
+printf("G0GE8OMOGZ8M@U.vvi:LXYu1MY ,.UGi,:,iSG@@@J:,::,.XF1kj ,:,.:.:MOEG8GqqNZZ8P5uUUkqGEqkXFF5XP0N0NEE8ZOO\n");
+printf("OZZOOMMMOO8MBu vLr,SGPkEBB .,,...,,::77r::,::::.LGXNOL.::i:,qMPENZZGEEEOMMENFS5SFF21212FSPkXP0PqXqPE\n");
+printf("MZO8MMBMMMMM@j.77i:MMZO8@B ...,::,,............ vMqkZOFvYNqXOXPPN0GGMOMOO00Sk15UUu2U11FFkFS1kFSkXSXE\n");
+printf("OOZO8MMBMBOMBj J7ri@MMOMBF ,:,.::i::::,:.,:::::.:FPkXEZEqEN0SkFSFkSPkNqP2521U1uJLJJFSq52uYJF511PSZOM\n");
+printf("80EEG0Z0G8G0B2.vj7YOZN0NOB: ..:,,.::::iiiii:::iijXXF51525U52FSS55U2u2JuuUuUuF5uLLLYJ55uLLvu5FukSPMBM\n");
+printf("EPXqXqXNP0PqZk:7vrJZSSFXN8.....,,,.......,.,.. .:5GX5Fu1jJj21SFk22u2uUu2U11XqPYY7vvL7L7v7jkM0kSPZ@BB\n");
+printf("E5S1F5S5SFkkZJ ir:1qkFkSOi  .                     jqk1Jv7777YLJjUYuuUu22S5kFkS1L7iiiiir7J2GMEU1kGBM8\n");
+    }
+    else if(Escolher == 3)
+    {
+        printf("BMMMMOM8O8MOOOMOMBBM@MBOMOM8OOM8MMMMBM@MMMMMMM@B@ZYUSXGqOB@GOOOqSFNOBMMOO8MOO8O8OOMOMOO8OOM8MMMOBMBMBBBMBMMMMMBB@M\n");
+printf("MMOOGZEGZ8ZOZOOOOMMBMBMMOMOM8O8O8OOMMMOMOMOMOBO7rvY5uMOuXMOOZOEGqENXkMOO8OG8EZEG08EZZ8GOZO8O8O8O8MOMMMMMOMOMOMOMMM\n");
+printf("M8O88EGZZEGZOGO8MOMMBBBMBMMMMMMOMOMMMOMOMOMOBOirk0Z8OB@OXkPOBGPNGB@GZ0MOM8O8OG8EGE8EOG88OOMOM8O8OOMOMMMMMOMOMOMMMM\n");
+printf("MO8OZGZG08Z8GOZO8OOMMMMBMBMBBMMMMBMBMMOO8OOMMXJ@MB8ZB@B@MMOBq5N@MMNqNNMOG8GOEGZGEGZ888GOOMOO8OGOGOGO8MOBMBMMOMOMOM\n");
+printf("MGO8OZ8EGEZZG8OGOOMOMMBMBMBM@MBMBMBMMOO8OOMMMvNBMB@EGB@MMBMuYZB8U7FGqkO88GOZGEGZGZGZOZ8GO8O8OGOGOGOGOGMOMOMOMOMOMO\n");
+printf("O8GGEZ0Eq0N00GE88OOMMMMBMBMBMBMMMBMMMMOOOMMBSkB@B@B@M@B@B@2j80GMEXGGNq8MZ8GZ0GEZNG0GEGE88OGOZ8ZOG8ZOG8GOOO8O8MOMOO\n");
+printf("OEZ00qqXqXPkPPZEOGMOMMBMMMBMBBBMMOBMMMMOMOMMOk58BB@B@B@MSv::;,,NMkq0XXMG8EGZ80ZqE0Z0G0ZE8GM8O8OZOGOZGE8GOGO8O8OOM8\n");
+printf("OEE0N0XNPqXPPENZGOOOOMMMMMMMOBMMMMOMMBMMMMM@M7. iuU1uL7;:::,,:.u8FkS2qMMEGZ8Z8ZG0E0Z0G0ZEG8O8GE8E8ZG0GEOGO8OZOGMOO\n");
+printf("G0GEZ0Z0EN0N0NZZOGO8MMMOMOMOMOMMMOMMMMMMMMBB@L::rrv777LvL7r7vi;FqFqu7G@O8EGZG0ZNE0ZN0NE0E0ZE8ZGZGG8ZGZ888GOGGGG8O8\n");
+printf("qNE8EG0Z00qENEEGGOGMOMMMOMOMOOOMMMOMMMMMMBM@Br..:rvuuuvrrri::rr77uY7r72MGG0ZEEqEq0q0q0qEq0NZ0GEGZ8EGZOZOGGEZEZEGGO\n");
+printf("EXGZG0Eq0XqX0qEZO8O8MOMOO8MGO8OOO8OOMOMMMMBB@1rPEFJ7YLu10EOZkriirrvi7:7ZMZG00q0qNPNXqXqP0NEq0NE0Z0GE8Z8ZGZZEZE8E8E\n");
+printf("PP0ZNEPNXqXqXqqEZO8O8O8OOO8OGO8O8O8OOMOMOMMBBB7@B@BOkPB@B@@@BOvii;rFOYiB8GEEN0PqXqXPkXkPk0PNPEq0qENZN8ZGZOZ8ZGGOZ8\n");
+printf("0kZN0PPSPkPkPPNNZZOGOOO8O8O8OGOZ8GOGOOMOMMMM@B.7kB@BLr0GM@Bu2uv:ii:r7:YBOZ0qqXXFXkXSkSXSqXXkqP0P0P00E088OZO8OGO8OG\n");
+printf("PXPqXX5SFkFkSXSNqEZ8GMGOOOOOGOZOZOGOGM8MOMMBB@  :SFv ,:rJNkL::,::iir :MMGGqNPPSXSXkXSkkPkPSPXNPqkNPqq00GE88MOM8OOO\n");
+printf("qFXkkFF2SFS1SFXkN0GGO8OZO8O8O8OZ8ZOG8GOOMMMMBBi,7rr..,,,ii777r;iii:J@BB88EEqNXXkkFXkkSXkXkXSPkPSkSPkNq00ZZOOMOM8OO\n");
+printf("k5FS2FU2u2151FFPX0E8GO8O8MOM8O8OG8GO8O8OOMMMM@Pi7vi :  .iL7rL1Y7ii:rB@OOGZN0PqXXFkFF5SFkkkFXSkFSFkkXPNNEEOGMOMOMOM\n");
+printf("XuS2521U1u2215kSPP0EGGO8OOMOM8O8OGO8O8OOMOMMMM@7:7r7GOMN;iY77uu7rii:@B@MMOOZEqNXXSk5S5F5SFkFS5kFSFXkNqE0GZOMMOMOMO\n");
+printf("F55FUUu2U1U11S5XkN0G0OGO8MOMOM8O8O8O8OOMOMMBMMB@:::;JPLiirvvi7JYrrri JB@@@B@BMEEPqkXSXFSFkFkFkFXSPXqP0EGGOOMMMMMOM\n");
+printf("X2S55U2U1UF155kkqPZ0ZGO8O8MOM8OOMOMOOOMMMM@B@B@BZiZF0ZONEq8JirjLvL7;.  r.,rYZB@B@MOZ0XPkXSXSPkqqNPNNE08GOOMMBMMMMO\n");
+printf("k5F525151SFSFkFXXZ0ZZO8OOMOMOM8O8OOOOMOBB@B@BOu: ,5ru8q5Lv21i7vY2j7ii  vj     ,L208BBB8GqNXNXNqNq0PE0ZEGGMOMOMOOOO\n");
+printf("X1SFS5F5kFXSXkqPNNZZO8O8MOMOMOO8OGO8MM@B@MY       vLPZ8NUr7rrv1PSY7rY. vZ..         vkGB@M80EPNq0NEEGEGGO8OOO8OG8Z\n");
+printf("XSFXFXSkSPkqPNqENZ08ZOOOOO8O8O8OG88MB@BY.      . :Y7vJL7rrvkN805uj7L7  50:.   ..,.     .78@@BOZZ0ZE8GO8OGO8M8O8OGG\n");
+printf("q5XFXkXSPXqNE0ENZEZZOOMOM8OGOGOZ88@BB:    ... .:ik7;OOMMBM@OF22UUYYZ:  Gk:L:.   ::,  ..   .iMB@OM8O8OOOGOGO8OGO8OG\n");
+printf("kkkPSXkPq0qEEZ0ZEGZOOMOM8OGO88ZGG@@r     , ...i::X: 25LSM@MGkS1F1S87 . :. iu7i   .::...,     qM@BM8O8OGOGOGOGO8O88\n");
+printf("X1XkXk0P00ZE8ZZZGEGGOMMMM8OG8ZGO@O    ....,::ri,;:: :qNU0OMGG0ZPEO7 .,:. .:ivLi,,  .:,... .    :@BMOOGO8OGO8O8OGOG\n");
+printf("kFFXkPX0qZZGZGEZZZE8OMMMOOZGE88@Z    ... ::::i:rLJ5j.rMBMMMMG8GMEv ,:r7L: ,r;7::7i.  ,,.        :@BBMM8M8O8OOOGOOO\n");
+printf("q5XkXXqPEEGZGEZE808GMOBMMO8EG8@Z   .:,. .:,.,.,,::;7iUSuqBBESkPui:7Lvr7vL,.:Lur:::Y:,.::,..       0B@MMOMOMMMOMOMM\n");
+printf("XFFkSPXE0ZEGZG0ZZGZOOMMMOOZ8Z@B  .,:7vi7LL777vri::ir7ri: :i;;;iii77ii;r7vi.:ivjvr::rri::::.... .   JB@MOOMOMOMMMOM\n");
+printf("q5XkXkNq00ZEGEZEZE8ZOOMOOZZ0M@. .,ii;rYF01uL7rvLLrirvrii:..,iii7uYJri:irL7..iiLui7r:7vrii::......    @@8OGO8OG8ZOG\n");
+printf("kSSkSPXqq0qG0E0EqZqE08GOEZEGB7 .,:ii:iiii7vJjjv7rri:,::irri:i7vJv77viiiirYr,.;7j77Jir1rr7i::,,....    B@O8ZOEOZZEG\n");
+printf("qFXSkFPkqXNPENEqNP0qENGEZEGBG  .,:i::::,..,,:iiiiii::,:,:ivvr,. ..,,:i::::ri,.,rvrkJrUrrLri::::.. ,.   1@BOG8Z8G8E\n");
+printf("NXkkSXSPkqP0q0qNqNPENZ0ZZ8B@  ,:ruLvi::iii,,..,::ii7v7ri:::i7ULr:,......:,irv7..::v1LUi7LY;rri:i,....:. i@BM8GZ8GG\n");
+printf("EXqXPXPkPkPXXSXXPSXSPPEEGBB  iLii7ULiruiiirii:,.,,::irL7ri:,::;L1u7ii:iriLuUSukui,,7u2;75FvvUYiiu:..ir:   8@MGGZG0\n");
+printf("ZNNNXPXPkXSkSS1F1F5SFXk0M@  i;v;,iirLL2Y:iiii7ii::,,,:irrv7v7riiivL2JLrYu@uij@FJvui:7PJj0qv5SSrikL.:r..,   5BBZGNN\n");
+printf("OEZ0EPqkkSS5F11U115FkFP8@  .Li7vi:LY7iXG7:i:7i,i7r7i:,::iirirrrii::i7vLjX7:.r.vv:;JjuOMFX555F5vrS1i,:.,,,.  :B@ZZP\n");
+printf("OOOO0NXPSS151F212F1SFPP@, ,;v;:7,,1XXSPPO7:iG@EGkSUj7ri::iirr7rv77r;:iirJ7i:,YZuirrLEOMBE25225LY1Fr:ri,::,.   S@GE\n");
+printf("MGMO8NNXPSS1F21211kFXkMv  r:rr:::LX5kP1u@8, .;uL77LLujuv7iiiir7rrr7vv7rrLZ@77OBv7vuviJXSOMNJ22UJU2riL7r:::r,.  BOq\n");
+printf("Z0ZZ0ZqqkX5F15U1U1FkSXB:  ::ir,rXGXkF17ZGMZ7..  ..,:ir7YJjv7iiiri;ir;rr7vLuUUjYurr,,vvivuOB@SuuuJ1v77LL7::::..5@MZ\n");
+printf("k5PSXFk5S251F2FUF2FFPPB2 .:ir77FkSS1FrU8ZEMBk:vvvi:,. ..,:r7YLLrrr7r7r7rvJUJFuj7:::irL1J7:JB@ESu512Lv77i:. .77iu@M\n");
+printf("uuu1u1uUjuj2U1UF5SSPNBk:irir77Uq2uju7:8GqE0OBJ:7j55PF5jYr:.  .,,.,::iiii;uvr:::ir7rv7i:::7P S@O0uFFFL7ri;r72U7i,r@\n");
+printf("uvuYuYuYJLJYuuUU5FqG8;.iSZG2vY2uuJJ2uFON00ZEOBB77YY7LY25NXOB@kv5PSL77rrr77LuSN8FLi:.:iri7BM vBMMEJuUurrJ8B@ZFL7i:Y\n");
+printf("v7vYLYLLvLvLLYJ2uSGU..vFXZO@BB8GEqkZGO0ZNZZZZOBr.v7Lv7iiii7FB@7OB@B1FkkPSFuL7r;r;rvjvi,7q@B:U@OOMMNEGBB@BM0FL7rYrr\n");
+printf("7ivvvvLvLvvvLLJjFki.Lu21FSqNMOOS1SZq0EZ0E0Eq0qMu.,iL2U1jLr: 1B:.:MB:7UkX0ZGNP1uLLLv,.:uFL5@i OB8OOBBBvG0X1uvrrjJL7\n");
+printf("rr7777777v7vvLL2F..uPqFX5F1PkXuLu0P00ZEZN0P0qNqBF::::::;LkkuO@Y7:ZBrrLvLvvrriii7i..i7vLL;7Bv.@BOOM@8iLFSSFJYJ22uu2\n");
+printf("7i777r777r77vvuu..qSqEOGZ0PuuvvSGN0qEEGNEN0q0q0ZMiivUuLri::r7O@12Z@BULv77rLLJ7i..iLL7i;i7r@P L@MMM0i5NFuUvvU2vLUk1\n");
+printf("vr7vvvvvvv7vvJJ.:SXGPE0E0k1YvYkZ00NZEZ0EqNqqXNXqOF:rrr7Luur: JBi:i0@Fj5PF2vi..:L1L:::,:77:P@. O@BEY2F5uL77LuJvuXk1\n");
+printf("YrLvYLJYJYjYuu.:ENPkX51LU51Lu0ZNEN0NGEGNNPqSXSPXZG::ri;ii:7viq@7vvqB@Ljr:.,:jS2i:i7:ir7:,,rBY 8BGukP2v7vvUFj21EqXu\n");
+printf("v7vYYuj2u1UFk:iXqPSkkX22LUuXZZq0NENEEG0EPqkXSXkPNMS::,..:vLuuEBEY7iu7. .iuPPJrrLL7:7v7,,:::2E.rM5S1ULL7LU21qqGPX52\n");
+printf("Y7jYuu2255kE;,51kXXFNkPPFS0GZ0ENNqENE0NP0PPXqkqP08@7.;uY2L7i:.,::,:,ivFPPu7irvY7ii7i:.:ii::.PL uFJJrLvjuS2SEOE0kX2\n");
+printf("JrvLLuu11kPi v1SUFPP0F1kFPX00NqqXPXqXXFkSPXqX0XNNGMO,uviir7vvJLLvjUFuj7i:::ri:.,::.,::i:,:::iN2j;iivrY2kPGOMGEXXF1\n");
+    }
+    else if(Escolher == 4){
+printf(":.::,:,,,,,:,:,:,:,,,:.,,,..:i::,,.,. .:..v;:i::,i:;,. .  .::i::::::::::::,:::::::\n");
+printf(":.:,:,:,:,,,:,:,:,:,,,,.,..,vi::7ii7ii:i7:L7i:,r::i:,:.,,.. .,::i::::::,:,:::::,:,\n");
+printf(":,::::,:,:,:,:::,:,:,:,,.,i;:riirr:r;rvr7vLYUFUkLi,..:...:..i..:,:::::::,:,:,:,:,:\n");
+printf(":.:::::,:,:,:,:,:,:,,,:..i7:i:7L7v7::,i7LrvvYLuu1Lr:,...,:iir .. ,i::::,:,:,:,:::,\n");
+printf(":.::::::,:,:,:,:,:,:,:.,.ui7L2Jvrr:iiiii7vrr77.......:,:..:::,,:..::::,:,:,,,:,,,,\n");
+printf(":.:::::::,:,:,:,:,:,:,, :L:ruiiii:::iiriiirr7rrii::.:.,:::, .:.:,...:::,,,:,,,,.,,\n");
+printf(":.::,:::::,:,:,:,:,:,:..7ri77ri:,:i:,:::::iii:i;iiii::,:,,.,..:.... .:,,,,,,.,.,,.\n");
+printf(":.:::,:::,:,:,:,:,:,,..iOuur:::iviiii::::::::,:,:::::::,:.:,,,. ..   ,:,,.,.,.,.,.\n");
+printf(":.::::::::::,:,:,:,:,..PUv7ii7rvL7iii:.,:i,:,:,,,,,:,:,::,,,.:.  .  .:,,.,.,.,...,\n");
+printf(":.:,:,:,:,:,,,,,,,,,, :5r::iLr7r:,::,.,:::,.,,,.:.,.,,,,:.,,..,.     ,:...,.......\n");
+printf(":.::,:,:,:,,,,,,.,,,. rSYuvvirr:::,....:,:,.,:,:::::::::,,.......     ,,..........\n");
+printf(":.:,,,:,,,:,:,,,,,,.. UkX5Y7Lrr7i:. ,.:::::.,,:::::::::,:.,...,.,    .,.,.........\n");
+printf(":.,,,:,,,,,,,,,,.,., :Nq5F7Yiri::,..,,,,,,.,.,,:::::::,:,:,,...,., . .............\n");
+printf(": :,,,,.,.,,,.,.,.,. r8N1:i::::,::,::.,,....:,:::::::ii::::::::::ir:  ,...........\n");
+printf(",.,,.,.,.,.,.,...,.. U5i::rii7i::::;i:::,,,:,:::,::i:iii:::i::::::::..............\n");
+printf(": ,,,.,.,.,.,.,.,.,..7YL7:rYvrrri.i7r::,::i:,,:::::::::::::::,:,:,. ,:............\n");
+printf(",.,,.,.,.,.,.....,.,.;SL:77iiiYLr:rr:i::::::.::,.,....   ......,..   .............\n");
+printf(", ,.,.,.,.,.,.,.,.,.,v5:.::::,77vri:::::iii::,  ....,.,.....,,. .     ............\n");
+printf(",.,,.,.,.,.,.,.,.,,,.LL::vuJi,,ivur::::::ri::::7L5FqOBM@GXJrir:,;5ZZqv.,..........\n");
+printf(", ,.,.,.,.,.,.,,,,,.,iriX88Jr.,::ri,:,:::irLqZ@B@B@B@@@OMON7iiru@B@B@v............\n");
+printf(",....,...,.,.,,,.,,,.rirUL7L:.,::::::i::::iJYUXNN7:GBPMMqvi:,:P@B@M@; .,..........\n");
+printf(", ,...,...,.,.,.:,:..:7:rr77.,,,::i::i:,:.,:::iirvYJUvuuj::,.:Guqkr:  ,.,.........\n");
+printf(". .........,,:,:,:,,..ii:..F7:::ii:iii::,,..:r:iivYujJvrrii:,.LPX27:...,..........\n");
+printf(", ,.....,.,,,,:,,,:,,..ii .:7riiriiiri7i::i::,:,:,,,:,:::::.:. :r;i:,.,.,.........\n");
+printf(".......,.,.,,,,:,,,:,,..Lv.,,7iiiiii:;rri::::,,:,,.....:.:,..: .....,:.,.,........\n");
+printf(", ......,.,.,,:,:,,,,.. ;F77rYi:iii:::iri::,,.,.,,:..ivi:::.,,. ;.  ..,.,.........\n");
+printf(". .....,.,,,,,,:,:,,.   .rrr:;ii:::i:::i:::i:::::i:rjMF. ..,,:. Juii:.,,..........\n");
+printf(". ......,.,,,,:,:,,. .1B@iirrr;ii:i::,::::ir777r7L2ujL27:.  ... ;BU7:.,.........,.\n");
+printf("...,.,.,.,,:,:,:,:. 2@@@B:i777i;i::::::::ii7YLvUk1YJr:7qZM8uirr:7@Or.,,,.,.,...,..\n");
+printf(", ,.,.,.:,,,,,:,:..i@@@BL:i;7rrii:::::i:i:irvr722UULr:rruP@Bk1FuMGY.,,,.,.,.,...,.\n");
+printf("...,,,,,,:,:,:,:.,77u@B@7iiirr7rii::ii:iiii77i:jZ@OkJ22521vvJruEvr:.,:,,,,.,.,.,,,\n");
+printf(",.,.:,,,:,:::::.,rUL7q@Mu,irrrvvr:::iirir;r7r::2YvuJr7rvLjvvkvSJir,.:,:,,.,.,.,., \n");
+printf(",.,,,,,:,:,:,,.:7uYj77B@Y.:;irrLLvii:ii;rrrJii7Li::iii::,,.. ,7vr:.,,,,,,,.,.,.,.,\n");
+printf(":.:,:::::,,...ivLLLvLrk@7.:iiirvuJuLv77r7r7ULrvii::ii;77vr77,.:ii.,,:,,,,.,.,.,.,,\n");
+printf(",.,:,:,,...;2L7LvYJYv77@X,,ii;rr7vj5Fq5Y77;7ri:::::irrrvvL7r  .i..,,,,,,.,.,.,.,,,\n");
+printf(":.:,,...:JGPMurvuJujY77E@j::rr7rrrvLY2qSuv7i7ri,,.,,,.,.. ..  .,..,.,.,,,.,.,.,.,.\n");
+printf(".....:rSGP7LBOiLYYYuLv7YB@Yi:7v7777777LuJuJL7Lvr:,.,.,.....,...,.,.,,,,,.,.,.,,,,,\n");
+printf(",.irjX8F7ijXOBJrvLYjJv775BM7iiir7rvvuLYYuYujuvJuj7r:i;riii77v:. ....,.,.,.,.,.,.,,\n");
+printf("vv2Pk1r7uEZ0k@B7vJvJvYLLvPBZvi:;rrrLLJuXP0PEXk5FkEEZGMZ8P0Z0r,i:  .....,.,.,.,.,.,\n");
+printf("5uu7r71EM8N2kP@FvJuJuLJLL7GBqvrrrr7r7721110OBB@B@MBBM0OEMMFX:rukY:.   ......,.,.,.\n");
+printf("vr7jFGZEPS1F1SNMvujuuuLJvvYOM0UYrL7vL12jLJYuYJUkFS51iLB@B@NS:uLXOS:,:,    .....,.,\n");
+printf("YuN005kqNNNXX2205LUjJjuvJLvY88ZSYLuLYvUU1u5uY777LJjiiB@B@B@i.LPLMG:ivkv7:    .... \n");
+printf("Pqq0SFSF1kFkXXXkqYJjYYYJLYLvuZGZkuLv7vvvrYu25EEP5ui:G@BBB@OY :E10M:YUjJN8u::   .. \n");
+printf("0SSFPkXF521UF5XPMJLYYLLvJjYLLjNNPk1LLLu77iirLLYvr::Z@B@8ZFFBB vGXPiiquu1E1Fj7i. . \n");
+    }
+
 }
